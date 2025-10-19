@@ -1,0 +1,99 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Transaction Tester</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        textarea { width: 100%; height: 100px; margin-bottom: 10px; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        pre { background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>SMS Transaction Tester</h1>
+
+    <p>Enter an SMS message (Arabic or English):</p>
+    <textarea id="smsInput" placeholder="e.g., تم خصم 65.00EGP من بطاقة..."></textarea>
+    <button onclick="sendSms()">Send SMS</button>
+
+    <h2>Response:</h2>
+    <pre id="responseOutput"></pre>
+
+    <script>
+        async function sendSms() {
+            const smsMessage = document.getElementById('smsInput').value;
+            const responseOutput = document.getElementById('responseOutput');
+            responseOutput.textContent = 'Sending...';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/transaction', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Browsers automatically handle UTF-8 for JSON
+                    },
+                    body: JSON.stringify({ message: smsMessage })
+                });
+
+                const data = await response.json();
+                responseOutput.textContent = JSON.stringify(data, null, 2); // Pretty print JSON
+
+                if (!response.ok) {
+                    responseOutput.textContent = `Error: ${response.status} ${response.statusText}\n` + responseOutput.textContent;
+                }
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                responseOutput.textContent = `An error occurred: ${error.message}`;
+            }
+        }
+
+        // Pre-fill with your example Arabic SMS
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('smsInput').value = "تم خصم 65.00EGP من بطاقة المدفوعة مقدما رقم 0493 By Mobile Payment عند Vodafone Top Up APP يوم 16/10 الساعة 1:46 المتاح 6454.76 للمزيد اتصل ب 19623";
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Parser Tester</title>
+</head>
+<body>
+    <p>Input SMS in Arabic or English</p>
+    <textarea id="smsInput" placeholder="120$ were debited from card 1234 ..."></textarea>
+    <button onclick="sendSMS()">Send SMS</button>
+    <h2>Response</h2>
+    <hr>
+    <pre id="response"></pre>
+    <script>
+        async function sendSMS() {
+            const smsMessage = document.getElementById("smsInput").value;
+            const response = document.getElementById("response");
+
+            try{
+                const resp = await fetch('http://localhost:5000/api/transaction', {
+                    method: "POST",
+                    headers: {
+                        'Content-Type':"application/json"},
+                    body: JSON.stringify({message: smsMessage})
+                }
+                );
+
+                const data = await resp.json();
+                response.textContent = JSON.stringify(data, null, 2);
+
+            }catch(err){
+
+            }
+
+        }
+    </script>
+</body>
+</html>
