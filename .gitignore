@@ -1,6 +1,7 @@
 # Dependency directories
 node_modules/
 vendor/
+data/transactions.json 
 
 # Build artifacts
 build/

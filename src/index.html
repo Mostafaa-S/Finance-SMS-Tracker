@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -54,46 +54,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('smsInput').value = "تم خصم 65.00EGP من بطاقة المدفوعة مقدما رقم 0493 By Mobile Payment عند Vodafone Top Up APP يوم 16/10 الساعة 1:46 المتاح 6454.76 للمزيد اتصل ب 19623";
         });
-    </script>
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMS Parser Tester</title>
-</head>
-<body>
-    <p>Input SMS in Arabic or English</p>
-    <textarea id="smsInput" placeholder="120$ were debited from card 1234 ..."></textarea>
-    <button onclick="sendSMS()">Send SMS</button>
-    <h2>Response</h2>
-    <hr>
-    <pre id="response"></pre>
-    <script>
-        async function sendSMS() {
-            const smsMessage = document.getElementById("smsInput").value;
-            const response = document.getElementById("response");
-
-            try{
-                const resp = await fetch('http://localhost:5000/api/transaction', {
-                    method: "POST",
-                    headers: {
-                        'Content-Type':"application/json"},
-                    body: JSON.stringify({message: smsMessage})
-                }
-                );
-
-                const data = await resp.json();
-                response.textContent = JSON.stringify(data, null, 2);
-
-            }catch(err){
-
-            }
-
-        }
     </script>
 </body>
 </html>

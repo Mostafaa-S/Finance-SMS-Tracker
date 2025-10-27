@@ -57,7 +57,7 @@ export function parseTransaction(smsText) {
   // --- 4. Extract Vendor/Merchant ---
   // Looking for common prepositions like 'at', 'from', 'for' followed by a name.
   // This is often the trickiest part as vendor names are free-form.
-  const vendorRegex = /(?:at|from|to|for|by)\s+([A-Za-z0-9\s.&'-]+?)(?:\s+(?:on|date|time|ref|transaction|available|balance|$))/i;
+  const vendorRegex = /(?:from*number)*(?:[0-9]+)\s+(?:at|from|to|for|by)\s+([A-Za-z0-9\s.&'-]+?)(?:\s+(?:on|date|time|ref|transaction|available|balance|$))/i;
   const vendorMatch = smsText.match(vendorRegex);
   if (vendorMatch) {
     // Clean up extra spaces or common trailing words
